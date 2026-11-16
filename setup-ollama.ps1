@@ -59,12 +59,25 @@ $TrayApp = Join-Path (Split-Path $Ollama) "ollama app.exe"
 if (Test-Path $TrayApp) { Start-Process $TrayApp }
 else { Start-Process $Ollama -ArgumentList "serve" -WindowStyle Hidden }
 
-$up = $false
-for ($i = 0; $i -lt 30; $i++) {
-    try { Invoke-RestMethod "http://localhost:11434/api/version" -TimeoutSec 2 | Out-Null; $up = $true; break }
-    catch { Start-Sleep -Seconds 1 }
+function Test-Server {
+    try {
+        $c = New-Object System.Net.Sockets.TcpClient
+        $ok = $c.ConnectAsync("127.0.0.1", 11434).Wait(1000)
+        $c.Close(); return $ok
+    } catch { return $false }
 }
-if (-not $up) { Warn "Le serveur ne repond pas sur http://localhost:11434"; exit 1 }
+
+Write-Host "  Attente du serveur" -NoNewline
+$up = $false
+for ($i = 0; $i -lt 40; $i++) {
+    if (Test-Server) { $up = $true; break }
+    # Si l'app n'a pas lance le serveur apres 15 s, on le lance directement
+    if ($i -eq 15) { Start-Process $Ollama -ArgumentList "serve" -WindowStyle Hidden }
+    Write-Host "." -NoNewline
+    Start-Sleep -Seconds 1
+}
+Write-Host ""
+if (-not $up) { Warn "Le serveur ne repond pas sur http://127.0.0.1:11434 - relance le script."; exit 1 }
 Ok "Serveur en ligne sur http://localhost:11434"
 
 # ---------------------------------------------------------------------
