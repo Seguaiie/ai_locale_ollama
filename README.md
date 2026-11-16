@@ -25,6 +25,13 @@ Changer de modèle :
 | 12–16 Go | 12–20B | `gemma3:12b`, `gpt-oss:20b` |
 | 24 Go+ | 27–32B | `gemma3:27b`, `qwen3:32b` |
 
+## Mode jeu / mode IA
+- **`mode-jeu.bat`** : décharge les modèles et ferme Ollama, ce qui libère la carte graphique et la RAM.
+- **`mode-ia.bat`** : relance Ollama.
+- `.\ollama-control.ps1 status` : affiche l'état actuel.
+
+Astuce : clic droit sur un `.bat` → *Envoyer vers → Bureau (créer un raccourci)*.
+
 ## Commandes utiles
 ```powershell
 ollama list                    # modèles installés
