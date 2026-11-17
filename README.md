@@ -30,6 +30,8 @@ Changer de modèle :
 - **`mode-ia.bat`** : relance Ollama.
 - `.\ollama-control.ps1 status` : affiche l'état actuel.
 
+Ollama **ne démarre plus avec Windows** : les scripts retirent le démarrage automatique (même si une mise à jour le remet). Pour le réactiver : `.\ollama-control.ps1 autostart-on`.
+
 Astuce : clic droit sur un `.bat` → *Envoyer vers → Bureau (créer un raccourci)*.
 
 ## Commandes utiles

@@ -115,4 +115,8 @@ Step "7. Test rapide"
 & $Ollama list
 & $Ollama run $CustomName "Presente-toi en une phrase."
 
+# ---------------------------------------------------------------------
+Step "8. Pas de demarrage automatique avec Windows"
+& (Join-Path $Root "ollama-control.ps1") autostart-off
+
 Write-Host "`nTout est pret ! Lance 'ollama run $CustomName' pour discuter." -ForegroundColor Green
